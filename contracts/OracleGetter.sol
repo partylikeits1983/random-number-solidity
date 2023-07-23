@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
 // v3-core 0.8
@@ -38,7 +38,6 @@ contract OracleGetter {
         uint price = FullMath.mulDiv(sqrtRatioX96, sqrtRatioX96, base);
         return price;
     }
-    
     
     // @dev gets price of tokenIn in terms of tokenOut
     function estimateAmountOut(

@@ -1,8 +1,9 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
+// Author: Alexander John Lee
+
 pragma solidity ^0.8.19;
 
 import "./OracleGetter.sol";
-
 import "hardhat/console.sol";
 
 contract RandomNumberGenerator is OracleGetter {
@@ -15,7 +16,6 @@ contract RandomNumberGenerator is OracleGetter {
         }
     }
 
-    // Math functions
     function combinations() internal view returns (uint) {
         return (tokenAddresses.length * (tokenAddresses.length - 1)) / 2;
     }
@@ -51,6 +51,7 @@ contract RandomNumberGenerator is OracleGetter {
         return keccak256(abi.encode(arr));
     }
 
+    // @dev get pseudo random number in range a, b
     function pseudoRandom(uint a, uint b) external view returns (uint) {
         bytes32 _hash1 = hashArray(getPrices());
 
