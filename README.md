@@ -1,4 +1,4 @@
-## On-Chain Psuedo Random Number Generator
+## On-Chain Pseudorandom number generator
 
 
 #### Run tests
