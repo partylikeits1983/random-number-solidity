@@ -6,11 +6,7 @@ interface ContractAddresses {
   network: string;
   chainID: number;
   owner: string;
-  testTokenA: string;
-  testTokenB: string;
-  dividendToken: string;
-  splitter: string;
-  AMM: string;
+  random: string;
 }
 
 async function deploy(): Promise<void> {
@@ -18,39 +14,18 @@ async function deploy(): Promise<void> {
 
   const [owner, otherAccount] = await ethers.getSigners();
 
-  const ERC20_token = await ethers.getContractFactory("Token");
-  const tokenA = await ERC20_token.deploy();
-  await tokenA.deployed();
-  console.log("tokenA deployed");
+  const USDT = "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+  const USDC = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+  const WETH = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+  const UNI = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
+  const WBTC = "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+  const LINK = "0x514910771AF9Ca656af840dff83E8264EcF986CA"
+  const DAI = "0x6b175474e89094c44da98b954eedeac495271d0f"
 
-  const tokenB = await ERC20_token.deploy();
-  await tokenB.deployed();
-  console.log("tokenB deployed");
+  const addresses = [USDT, USDC, WETH, UNI, WBTC, LINK, DAI];
 
-  const DIVIDEND_TOKEN = await ethers.getContractFactory("DividendToken");
-  const dividendToken = await DIVIDEND_TOKEN.deploy();
-  await dividendToken.deployed();
-  console.log("dividendToken deployed");
-
-  const PAYMENT_SPLITTER = await ethers.getContractFactory("PaymentSplitter");
-  const splitter = await PAYMENT_SPLITTER.deploy(dividendToken.address);
-  await splitter.deployed();
-  console.log("splitter deployed");
- 
-  const AMM = await ethers.getContractFactory("SberAMM");
-  const amm = await AMM.deploy();
-  await amm.deployed();
-
-  /*   
-  const amplificationFactor = ethers.utils.parseEther("0.025")
-  await amm.modifyAmplificationFactor(amplificationFactor);
-
-  const protocolFee = ethers.utils.parseEther("0.0001");
-  await amm.modifyFeeAmount(protocolFee);
-  await amm.modifySplitterAddress(splitter.address);
-  */
-
-  console.log("amm deployed");
+  const RandomNumberGenerator = await ethers.getContractFactory("RandomNumberGenerator");
+  const random = await RandomNumberGenerator.deploy(addresses);
 
   const chainId = Number(network.chainId);
   const networkName = network.name;
@@ -58,11 +33,7 @@ async function deploy(): Promise<void> {
     network: networkName,
     chainID: chainId,
     owner: owner.address,
-    testTokenA: tokenA.address,
-    testTokenB: tokenB.address,
-    dividendToken: dividendToken.address,
-    splitter: splitter.address,
-    AMM: amm.address,
+    random: random.address,
   };
 
   let existingAddresses: ContractAddresses[] = [];
@@ -92,11 +63,7 @@ async function deploy(): Promise<void> {
 
   console.log("Network: ", contractAddresses.network);
   console.log("Deployer: ", contractAddresses.owner);
-  console.log("Test tokenA address", contractAddresses.testTokenA);
-  console.log("Test tokenB address", contractAddresses.testTokenB);
-  console.log("Dividend Token Address ", contractAddresses.dividendToken);
-  console.log("Splitter Token Address ", contractAddresses.splitter);
-  console.log("AMM contract address", contractAddresses.AMM);
+  console.log("random address", contractAddresses.random);
 
 }
 
