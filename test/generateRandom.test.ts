@@ -55,7 +55,7 @@ describe("Random Number Generator Unit Tests", function () {
           const { random } = await loadFixture(
             deploy
           );
-          const number = await random.pseudoRandom(0, 4);
+          const number = await random.pseudoRandom(0, 100);
           console.log("random number", number);
         }); 
 
